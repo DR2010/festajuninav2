@@ -1,0 +1,62 @@
+{{define "listtemplate"}}
+
+<h2>User Details</h2>
+<form method="POST" action="/userupdate">
+    <div>
+      <br>
+
+      <p/>User ID:<p/>
+      <p/>
+      <input type="text" name="userid" value="{{ .Item.UserID }}">
+
+      <p/>Name:<p/>
+      <p/>
+      <input type="text" name="userid" value="{{ .Item.Name }}">
+
+      <p/>Is Administrator:<p/>
+      <p/>
+      <input type="text" name="isadmin" value="{{ .Info.IsAdmin }}">
+
+      <p/> Application ID:
+      <p/>
+      <input type="text" name="applicationid" value="{{ .Info.Application }}">
+      <p/> User Status:
+      <p/>
+      <select name="status" id="status">
+        {{ if eq .Item.Status "ACTIVE"}}
+            <option selected="selected">ACTIVE</option>
+        {{ else }}
+            <option value="ACTIVE">ACTIVE</option>
+        {{ end }}
+        {{ if eq .Item.Status "INACTIVE"}}
+            <option selected="selected">INACTIVE</option>
+        {{ else }}
+            <option value="INACTIVE">INACTIVE</option>
+        {{ end }}
+
+      </select>
+      <br>
+  
+      <br> User Type:<br>
+      <p/>
+      <select name="usertype" id="usertype">
+          {{ if eq .Info.UserType "BASIC"}}
+          <option selected="selected">BASIC</option>
+          {{ else }}
+          <option value="BASIC">BASIC</option>
+          {{ end }}
+          {{ if eq .Info.UserType "ADMIN"}}
+          <option selected="selected">ADMIN</option>
+          {{ else }}
+          <option value="ADMIN">ADMIN</option>
+          {{ end }}
+        </select>
+      <br>
+  
+        <p/>
+        <input type="submit" formaction="/activityadd" value="Submit">
+        <p/>
+    </div>
+</form>
+
+{{end}}

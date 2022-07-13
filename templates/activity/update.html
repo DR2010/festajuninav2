@@ -1,0 +1,67 @@
+{{define "listtemplate"}}
+
+<h2>Update Activity</h2>
+<form method="POST" action="/activityadd">
+    <div>
+        <br><b>Type: </b>
+        <p/>
+        <select name="activitytype" id="activitytype" value="N" class="ui dropdown">
+             {{ if eq .Item.Type "Feijoada"}}
+                <option selected="selected">Feijoada</option>
+             {{ else }}
+                <option value="Feijoada">Feijoada</option>
+             {{ end }}
+
+             {{ if eq .Item.Type "Caldo Verde"}}
+                <option selected="selected">Caldo Verde</option>
+             {{ else }}
+                <option value="Caldo Verde">Caldo Verde</option>
+             {{ end }}
+
+             {{ if eq .Item.Type "Picanha"}}
+                <option selected="selected">Picanha</option>
+             {{ else }}
+                <option value="Picanha">Picanha</option>
+             {{ end }}
+
+             {{ if eq .Item.Type "Not Available"}}
+                <option selected="selected">Not Available</option>
+             {{ else }}
+                <option value="Not Available">Not Available</option>
+             {{ end }}
+
+        </select>
+        <br>
+
+        <p/> <b>Name:</b>
+        <p/>
+        <input type="text" name="activityname" value="{{ .Item.Name }}">
+
+        <p/> <b>Description:</b>
+        <p/>
+        <input type="text" id="activitydescription" name="activitydescription" value="{{ .Item.Description }}">
+
+        <p/> <b>Date:</b>
+        <p/>
+        <input type="text" id="activitystartdate" name="activitystartdate" value="{{ .Item.StartDate }}">
+
+        <p/>
+        <br><b>Status: </b>
+        <select name="activitystatus" id="activitystatus" value="{{ .Item.Status }}" class="ui dropdown">
+            {{ if eq .Item.Status "ACTIVE"}}
+                <option selected="selected">ACTIVE</option>
+                <option value="INACTIVE">INACTIVE</option>
+            {{ else }}
+                <option value="ACTIVE">ACTIVE</option>
+                <option selected="selected">INACTIVE</option>
+        {{ end }}
+        </select>
+        <br>
+
+        <p/>
+        <input type="submit" formaction="/activityupdate" value="Submit">
+        <p/>
+    </div>
+</form>
+
+{{end}}

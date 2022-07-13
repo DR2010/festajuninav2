@@ -1,0 +1,107 @@
+{{ define "listtemplate" }}
+
+<div id="header" id="navbar" >
+    <a href="/" class="ui red button">Home</a>
+    <a href="/dishlistpictures" class="ui teal button">Menu</a>
+    <a href="/orderlist" class="ui teal button ">Orders</a>
+    {{ if eq .Info.IsAdmin "Yes" }}
+        <a href="/dishlist" class="ui teal button">Dishes</a>
+        <a href="/activitylist" class="ui teal button">Activities</a>
+        <a href="/adms" class="ui teal button">ADMS</a> 
+    {{ end }}
+ 
+</div>
+<p/>
+
+<form action="Submit" method="POST" />
+    <meta http-equiv="refresh" content="30">
+
+    <h3>{{ .Info.Name }} - {{ .Info.UserID }} - {{ .Info.UserName }}</h3>  
+
+    <div id="header">
+    
+    <div class="ui two column centered grid">
+        <button type="submit" formaction="/orderadddisplay" value="Add" class="ui violet button">Place Order</button>
+    {{if eq .Info.IsAdmin "Yes" }}
+        <button type="submit" class="ui red button" formaction="/orderlist" >Open</button>
+        <button type="submit" class="ui red button" formaction="/orderliststatus?status=Placed">Placed</button>
+        <!-- <button type="submit" formaction="/orderlistcompleted" >Completed</button> -->
+        <button type="submit" class="ui grey button" formaction="/orderliststatus?status=Completed">Completed</button>
+        <button type="submit" class="ui green button" formaction="/orderliststatus?status=Ready">Ready</button>
+        <button type="submit" class="ui brown button" formaction="/orderliststatus?status=Cancelled">Cancelled</button>
+        <button type="submit" class="ui yellow button" formaction="/orderliststatus?status=PayLater">Pay Later</button>
+    </div>
+    {{ end }}
+
+    </div>
+    <p/>
+    <h3>Total: {{ .Info.Total }} - {{ .Info.ClientName }}</h3>  
+    <div style="float:left;" class="table-responsive">
+    <!-- <div style="float:left;" class="ui compact celled definition table"> -->
+        <p>
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th><b>Order ID</b></th>
+                    <th><b>Name</b></th>
+                    <th><b>Date</b></th>
+                    <th><b>Status</b></th>
+                    <th><b>Total</b></th>
+                    <th><b>Event</b></th>
+                </tr>
+                {{range .Orders }}
+                <tr>
+                    <td>
+                        <a href="/orderviewdisplay?orderid={{ .ID }}" class="ui black basic button">{{ .ID }}</a>
+                    </td>
+                    <td>
+                        <a href="/orderliststatusactivityuser?status=PayLater&clientname={{ .ClientName }}" class="ui black basic button">{{ .ClientName }}</a>
+                    </td>
+                    <td>
+                        {{ .Date }}
+                    </td>
+
+                    <td>
+                        {{if eq .Status "Placed" }}
+                        <a href="/orderviewdisplay?orderid={{ .ID }}" class="ui red button">{{ .Status }}</a>
+                        {{ else }}
+                            {{if eq .Status "Ready" }}
+                            <a href="/orderviewdisplay?orderid={{ .ID }}" class="ui green button">{{ .Status }}</a>
+                            {{ else }}
+                                {{if eq .Status "Completed" }}
+                                <a href="/orderviewdisplay?orderid={{ .ID }}" class="ui grey button">{{ .Status }}</a>
+                                {{ else }}
+                                    {{if eq .Status "Cancelled" }}
+                                    <a href="/orderviewdisplay?orderid={{ .ID }}" class="ui brown button">{{ .Status }}</a>
+                                    {{ else }}
+                                    <a href="/orderviewdisplay?orderid={{ .ID }}" class="ui yellow button">{{ .Status }}</a>
+                                    {{ end }}
+
+                                {{ end }}
+                            {{ end }}
+                        {{ end }}
+                    </td>
+                    <td align="right">
+                        ${{ .TotalGeral }}
+                    </td>
+                    <td align="right" >
+                        {{ .EventID }}
+                    </td>
+
+                </tr>
+                {{end}}
+
+            </table>
+        </p>
+        <p/>
+    </div>
+</form>
+
+<table></table>
+<div id="footer">
+    <div id="header" id="navbar">
+        <a href="/login" class="ui violet basic button">Login</a>
+        <a href="/logout" class="ui violet basic button">Logout</a>
+    </div>
+</div>
+
+{{end}}

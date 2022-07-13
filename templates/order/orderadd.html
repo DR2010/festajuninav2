@@ -1,0 +1,103 @@
+{{define "listtemplate"}}
+
+<div id="header" id="navbar">
+    <a href="/" class="ui red button">Home</a>
+    <a href="/orderlist" class="ui green button">Back</a>
+</div>
+<p/>
+
+<h4>{{ .Info.Name }} - {{ .Info.UserName }}</h4>
+
+Event:<br>
+<input class="ui input" type="text" id="eventid" name="eventid" value="{{ .Info.EventID }}" readonly>
+
+<br>User ID:<br>
+<input type="text" id="userID" name="userID" value="{{ .Info.UserID }}" size="30" style="text-align:left;" readonly>
+
+<br>Order Name:<br>
+<input class="ui input" type="text" id="orderClientName" name="orderClientName" value="" onblur="getdatetime()" required placeholder="Name for the order">
+
+<br>Pick-up Time<br>
+<select class="ui dropdown" name="pickuptime" id="pickuptime">
+    <option value="WhenReady">When Ready</option>
+    <option value="1100AM">11:00AM</option>
+    <option value="1200PM">12:00PM</option>
+    <option value="0100PM">01:00PM</option>
+    <option value="0200PM">02:00PM</option>
+    <option value="0300PM">03:00PM</option>
+    <option value="0400PM">04:00PM</option>
+</select>
+
+<br>
+
+<h4>Select your options below:</h4>
+<select class="ui dropdown" name="pratoname" id="pratoname">
+        {{range .Pratos }}
+            <option value={{.Name}}>{{ .Name }} - {{ .Price }}</option>
+        {{end}}
+        </select>
+
+<h4>Qty:</h4>
+
+<select class="ui dropdown" name="pratoqtd" id="pratoqtd">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+        </select>
+
+<button onclick="addNewItem()" style="height:40px;width:125px">Add</button>
+<!-- <button onclick="removeSelectedRows() ">Remove Item</button> -->
+<!-- <button onclick="newOrder() ">New Order</button> -->
+
+<p/>
+<br>Order Number:<br>
+<input type="text" id="orderID" name="orderID" readonly class="ui orange button">
+<p/>
+
+<div style="float:left;" class="table-responsive">
+
+<table id="myTable" class="table table-striped table-bordered">
+    <tr>
+        <th>Action</th>
+        <th>Dish</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Total</th>
+    </tr>
+</table>
+
+</div>
+
+<table></table>
+<input type="text" id="totalorder" name="totalorder" readonly class="ui orange button">
+<p/>
+<p/>
+<button class="ui teal button" onclick="saveOrder() ">Place Order</button>
+<!-- <button onclick="saveOrder2() ">Place Order</button> -->
+
+<p/>
+
+<br>Date/Time Placed:<br>
+<input type="text" id="orderDate" name="orderDate" value="" size="5" readonly>
+<input type="text" id="orderTime" name="orderTime" value="" size="5" style="text-align:left;" readonly>
+<br> Status:<br>
+<input type="text" id="status" name="status" value="Not Placed" class="ui green button">
+
+
+<br> Message:<br>
+<textarea rows="4" cols="50" id="message">
+</textarea>
+
+
+<p/>
+{{range .Pratos }}
+<input type="hidden" id="{{ .Name }}" value="{{ .Price }}">
+{{end}}
+
+<p/> {{end}}

@@ -1,0 +1,125 @@
+{{define "listtemplate"}}
+
+<div id="header" id="navbar">
+    <a href="/" class="ui red button">Home</a>
+    <a href="/orderlist" class="ui teal button">Back</a>
+</div>
+<p/>
+
+<h4>{{ .Info.Name }} - {{ .OrderItem.ClientName }} - {{ .Info.UserID }}</h4>
+
+Event:<br>
+<input type="text" id="eventID" name="eventID" value="{{ .OrderItem.EventID }}" readonly>
+
+<br>
+<br>Order Number:<br>
+<input type="text" id="orderID" name="orderID" value="{{ .OrderItem.ID }} " size="5" readonly class="ui blue button">
+
+{{if eq .OrderItem.Status "Placed" }}
+    <input type="text" id="status" name="status" value="{{ .OrderItem.Status }}" size="5" readonly class="ui red button">
+{{ else }}
+    {{if eq .OrderItem.Status "Ready" }}
+    <input type="text" id="status" name="status" value="{{ .OrderItem.Status }}" size="5" readonly class="ui green button">
+    {{ else }}
+        {{if eq .OrderItem.Status "Completed" }}
+        <input type="text" id="status" name="status" value="{{ .OrderItem.Status }}" size="5" readonly class="ui grey button">
+        {{ else }}
+            {{if eq .OrderItem.Status "Cancelled" }}
+            <input type="text" id="status" name="status" value="{{ .OrderItem.Status }}" size="5" readonly class="ui brown button">
+            {{ else }}
+            <input type="text" id="status" name="status" value="{{ .OrderItem.Status }}" size="5" readonly class="ui yellow button">
+            {{ end }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+<p/>
+<br>Full Name:<br>
+<input type="text" id="orderClientName" name="orderClientName" value="{{ .OrderItem.ClientName }}" readonly>
+<p/>
+
+
+<br>Pick-up Time<br>
+<input type="text" id="pickuptime" name="pickuptime" value="{{ .OrderItem.PickUpTime }}" readonly>
+
+<br>
+<div style="float:left;" class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>Dish</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+        {{range .OrderItem.Items }}
+        <tr>
+            <td>{{ .PratoName }}</td>
+            <td>{{ .Quantidade }}</td>
+            <td>{{ .Price }}</td>
+            <td type="number" step="0.25">{{ .Total }}</td>
+        </tr>
+        {{end}}
+    </table>
+    <!-- <button onclick="backToList() ">Back to List</button>
+    <p/> -->
+    <p/>
+</div>
+<p/>
+<div>
+<!-- Only here to prevent total from going up next to the table above -->
+    <table> </table>
+    <br> Total:<br>
+    <input type="text" id="orderTotal" name="orderTotal" value="{{ .OrderItem.TotalGeral }}" readonly>
+    <p/>
+</div>
+
+<div>
+
+    <a href="/orderlist" class="ui teal button">Back</a>
+    <p/>
+
+    {{ if eq .Info.IsAdmin "Yes" }}
+        <br>>> UPDATE ORDER STATUS:<br>
+        
+        <a href="/ordersettoready?orderid={{ .OrderItem.ID }}" class="ui green button">Ready</a>
+        <a href="/ordersettocompleted?orderid={{ .OrderItem.ID }}" class="ui grey button">Completed</a>
+        <a href="/ordersettopaylater?orderid={{ .OrderItem.ID }}" class="ui yellow button">Pay Later</a>
+        <a href="/ordercancelX?orderid={{ .OrderItem.ID }}" class="ui brown button">Cancel Order</a>
+        <a href="/ordersettoplaced?orderid={{ .OrderItem.ID }}" class="ui red button">Placed</a>
+    {{ end }}
+    <!-- {{if eq .OrderItem.Status "Placed" }}
+    {{ end }} -->
+
+
+    <p/>
+    <br> Order date:<br>
+    <input type="text" id="orderDate" name="orderDate" value="{{ .OrderItem.Date }}" readonly>
+    <p/>
+    <br> Order time:<br>
+    <input type="text" id="orderTime" name="orderTime" value="{{ .OrderItem.Time }}" readonly>
+    <p/>
+
+    <p/>
+    <br>Paid Amount:<br>
+    <input type="text" id="paidAmount" name="paidAmount" value="" >
+    <p/>
+    <br>Change:<br>
+    <input type="text" id="troco" name="troco" value="" >
+    <p/>
+
+
+    <button class="ui green button" onclick="calcularTroco()">Calculate Change</button>
+    <button class="ui green button" onclick="printOrder()">Print</button>
+
+
+
+</div>
+
+<select name="EatMode" id="EatMode" value="{{ .OrderItem.EatMode }}" hidden>
+    <option value="Eatin">Eat-in</option>
+    <option value="Delivery">Delivery</option>
+    <option value="Takeaway">Take away</option>
+</select>
+<br>
+
+<p/> {{end}}

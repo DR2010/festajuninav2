@@ -1,0 +1,42 @@
+ {{define "listtemplate"}}
+
+<h1>Add Activity</h1>
+<form method="POST" action="/activityadd">
+    <div>
+        <br><b>Type: </b>
+        <p/>
+        <select name="activitytype" id="activitytype" value="N" class="ui dropdown" >
+            <option value="Feijoada">Feijoada</option>
+            <option value="CaldoVerde">Caldo Verde</option>
+            <option value="Picanha">Picanha</option>
+            <option value="Not Available">Not Available</option>
+        </select>
+        <br>
+
+        <p/> <b>Name:</b>
+        <p/>
+        <input type="text" name="activityname" placeholder="name of the activity">
+
+        <p/> <b>Description:</b>
+        <p/>
+        <input type="text" id="activitydescription" name="activitydescription" placeholder="English description">
+
+        <p/> <b>Date:</b>
+        <p/>
+        <input type="text" id="activitystartdate" name="activitystartdate" placeholder="English description">
+
+        <p/>
+        <br><b>Status: </b>
+        <select name="activitystatus" id="activitystatus" value="N" class="ui dropdown">
+            <option value="ACTIVE">ACTIVE</option>
+            <option value="INACTIVE">INACTIVE</option>
+        </select>
+        <br>
+
+        <p/>
+        <input type="submit" formaction="/activityadd" value="Submit">
+        <p/>
+    </div>
+</form>
+
+{{end}}
